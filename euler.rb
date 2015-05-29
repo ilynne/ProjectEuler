@@ -15,12 +15,10 @@ class Euler
   end
 
   def problem_25(n)
-    i = 3
-    fib = fibonacci_to_index(i)
-    f_size = fib.last.to_s.size
+    fib = fibonacci_to_index
+    i = fib.size + 1
     until fib.last.to_s.size >= n do
-      fib = fibonacci_to_index(i)
-      # f_size = fib.last.to_s.size
+      fib = fibonacci_to_index(i, fib)
       i = i + 1
     end
     i - 1
@@ -39,10 +37,9 @@ class Euler
     arr.reduce(:+)
   end
 
-  def fibonacci_to_index(n)
-    fibonacci_seq = [1, 1]
+  def fibonacci_to_index(n = 3, fibonacci_seq = [1, 1]) # this would need some error handling
     n = n - 1
-    2.upto(n) do |i|
+    fibonacci_seq.size.upto(n) do |i|
       fibonacci_seq.push (fibonacci_seq[i - 1] + fibonacci_seq[i - 2])
     end
     fibonacci_seq
@@ -73,7 +70,7 @@ describe 'Project Euler Problems' do
   describe 'problem 25' do
     it 'should return the Fibonacci sequence id containing n digits' do
       expect(@euler.problem_25(3)).to eq(12)
-      expect(@euler.problem_25(10)).to eq(45)
+      expect(@euler.problem_25(1000)).to eq(4782)
     end
   end
 
