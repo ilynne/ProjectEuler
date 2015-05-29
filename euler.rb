@@ -18,9 +18,9 @@ class Euler
     i = 3
     fib = fibonacci_to_index(i)
     f_size = fib.last.to_s.size
-    until f_size >= n do
+    until fib.last.to_s.size >= n do
       fib = fibonacci_to_index(i)
-      f_size = fib.last.to_s.size
+      # f_size = fib.last.to_s.size
       i = i + 1
     end
     i - 1
