@@ -5,19 +5,12 @@ require 'rspec'
 class Euler
 
   def problem_20(num)
-    n = num
-    while n > 1 do
-      num = num * (n - 1)
-      n = n - 1
-    end
-
+    factorial = num.downto(1).inject(:*)
     digits = []
-
-    while num != 0 do
-      num, last_digit = num.divmod(10)
+    while factorial != 0 do
+      factorial, last_digit = factorial.divmod(10)
       digits << last_digit
     end
-
     digits.reduce(:+)
   end
 end
