@@ -1,8 +1,22 @@
 # To run tests:
 # > rspec euler.rb --color --format documentation
 require 'rspec'
+require './euler_support'
 
 class Euler
+  include EulerSupport
+
+  def problem_1(max, arr)
+    digits = []
+    1.upto(max - 1) do |i|
+      arr.each do |n|
+        if is_multiple_of(i, n)
+          digits.push i
+        end
+      end
+    end
+    reduce_digits(digits.uniq)
+  end
 
   def problem_16(num, power)
     reduce_digits(int_to_array(num ** power))
@@ -24,32 +38,18 @@ class Euler
     i - 1
   end
 
-  def int_to_array(int)
-    digits = []
-    while int != 0 do
-      int, last_digit = int.divmod(10)
-      digits.unshift last_digit
-    end
-    digits
-  end
-
-  def reduce_digits(arr)
-    arr.reduce(:+)
-  end
-
-  def fibonacci_to_index(n = 3, fibonacci_seq = [1, 1]) # this would need some error handling
-    n = n - 1
-    fibonacci_seq.size.upto(n) do |i|
-      fibonacci_seq.push (fibonacci_seq[i - 1] + fibonacci_seq[i - 2])
-    end
-    fibonacci_seq
-  end
-
 end
 
 describe 'Project Euler Problems' do
   before(:all) do
     @euler = Euler.new
+  end
+
+  describe 'problem_1' do
+    it 'should return the sum of all multiples of [n] below max' do
+      expect(@euler.problem_1(10, [3, 5])).to eq(23)
+      expect(@euler.problem_1(1000, [3, 5])).to eq(233168)
+    end
   end
 
   describe 'problem 16' do
@@ -75,6 +75,18 @@ describe 'Project Euler Problems' do
   end
 
   describe 'supporting methods' do
+    describe 'fibonacci_to_index' do
+      it 'should return the Fibonacci number at id n' do
+        expect(@euler.fibonacci_to_index(6).last).to eq(8)
+        expect(@euler.fibonacci_to_index(12).last).to eq(144)
+      end
+    end
+    describe 'is_multiple_of' do
+      it 'should return true if i is a multiple of n' do
+        expect(@euler.is_multiple_of(9, 4)).to eq(false)
+        expect(@euler.is_multiple_of(9, 3)).to eq(true)
+      end
+    end
     describe 'int_to_array' do
       it 'should return an array containing the digits in an integer' do
         expect(@euler.int_to_array(1142)).to eq([1, 1, 4, 2])
@@ -83,12 +95,6 @@ describe 'Project Euler Problems' do
     describe 'reduce_digits' do
       it 'should return the sum of the digits in the array' do
         expect(@euler.reduce_digits([1, 3, 5])).to eq(9)
-      end
-    end
-    describe 'fibonacci_to_index' do
-      it 'should return the Fibonacci number at id n' do
-        expect(@euler.fibonacci_to_index(6).last).to eq(8)
-        expect(@euler.fibonacci_to_index(12).last).to eq(144)
       end
     end
   end
