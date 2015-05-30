@@ -18,6 +18,17 @@ class Euler
     reduce_digits(digits.uniq)
   end
 
+  def problem_2(max)
+    fib = fibonacci_to_index
+    i = fib.size + 1
+    while fib.last <= max do
+      fib = fibonacci_to_index(i, fib)
+      i = i + 1
+    end
+    fib.pop unless fib.last == max
+    reduce_digits(fib.select{ |n| n % 2 == 0})
+  end
+
   def problem_16(num, power)
     reduce_digits(int_to_array(num ** power))
   end
@@ -49,6 +60,13 @@ describe 'Project Euler Problems' do
     it 'should return the sum of all multiples of [n] below max' do
       expect(@euler.problem_1(10, [3, 5])).to eq(23)
       expect(@euler.problem_1(1000, [3, 5])).to eq(233168)
+    end
+  end
+
+  describe 'problem_2' do
+    it 'should return the sum of even Fibonacci numbers below n' do
+      expect(@euler.problem_2(20)).to eq(10)
+      expect(@euler.problem_2(4000000)).to eq(4613732)
     end
   end
 
