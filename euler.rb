@@ -2,6 +2,7 @@
 # > rspec euler.rb --color --format documentation
 require 'rspec'
 require './euler_support'
+require 'prime'
 
 class Euler
   include EulerSupport
@@ -27,6 +28,23 @@ class Euler
     end
     fib.pop unless fib.last == max
     reduce_digits(fib.select{ |n| n % 2 == 0})
+  end
+
+  def problem_3(num)
+    i = num
+    if Prime.prime?(num)
+      i
+    elsif Prime.prime?(num / 2)
+      i = num / 2
+    else
+      Prime.each do |p|
+        if is_multiple_of(num, p)
+          i = p
+        end
+        break if p >= Math.sqrt(num)
+      end
+    end
+    i
   end
 
   def problem_16(num, power)
@@ -67,6 +85,14 @@ describe 'Project Euler Problems' do
     it 'should return the sum of even Fibonacci numbers below n' do
       expect(@euler.problem_2(20)).to eq(10)
       expect(@euler.problem_2(4000000)).to eq(4613732)
+    end
+  end
+
+  describe 'problem_3' do
+    it 'should return the largest prime factor for n' do
+      expect(@euler.problem_3(29)).to eq(29)
+      expect(@euler.problem_3(13195)).to eq(29)
+      expect(@euler.problem_3(600851475143)).to eq(6857)
     end
   end
 
