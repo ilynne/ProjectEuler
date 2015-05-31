@@ -31,20 +31,7 @@ class Euler
   end
 
   def problem_3(num)
-    i = num
-    if Prime.prime?(num)
-      i
-    elsif Prime.prime?(num / 2)
-      i = num / 2
-    else
-      Prime.each do |p|
-        if is_multiple_of(num, p)
-          i = p
-        end
-        break if p >= Math.sqrt(num)
-      end
-    end
-    i
+    Prime.prime_division(num).last[0]
   end
 
   def problem_16(num, power)
