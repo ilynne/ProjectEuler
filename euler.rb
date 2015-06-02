@@ -34,6 +34,23 @@ class Euler
     Prime.prime_division(num).last[0]
   end
 
+  def problem_4(num)
+    max = (10 ** num) -1
+    arr = (max.downto(10 ** (num - 1)))
+    palindrome = false
+    product = nil
+    palindromes = []
+    arr.each do |n|
+      break if palindrome
+      arr.each do |i|
+        product = n * i
+        palindrome = product.to_s == product.to_s.reverse
+        palindromes.push product if palindrome
+      end
+    end
+    palindromes.uniq.sort.last
+  end
+
   def problem_16(num, power)
     reduce_digits(int_to_array(num ** power))
   end
@@ -80,6 +97,13 @@ describe 'Project Euler Problems' do
       expect(@euler.problem_3(29)).to eq(29)
       expect(@euler.problem_3(13195)).to eq(29)
       expect(@euler.problem_3(600851475143)).to eq(6857)
+    end
+  end
+
+  describe 'problem_4' do
+    it 'should return the palindrome product for n' do
+      expect(@euler.problem_4(2)).to eq(9009)
+      expect(@euler.problem_4(3)).to eq(906609)
     end
   end
 
