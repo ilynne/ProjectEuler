@@ -107,6 +107,12 @@ describe 'Project Euler Problems' do
     end
   end
 
+  describe 'problem_5' do
+    it 'should return the smallest multiple of all numbers 1 to n' do
+      expect(@euler.problem_5(10)).to eq(2520)
+    end
+  end
+
   describe 'problem 16' do
     it 'should return the sum of the power result digits' do
       expect(@euler.problem_16(2, 15)).to eq(26)
