@@ -61,6 +61,11 @@ class Euler
     product
   end
 
+  def problem_6(max)
+    arr = 1.upto(max)
+    arr.reduce(:+)**2 - arr.map{|n| n ** 2}.reduce(:+)
+  end
+
   def problem_16(num, power)
     reduce_digits(int_to_array(num ** power))
   end
@@ -122,6 +127,13 @@ describe 'Project Euler Problems' do
       expect(@euler.problem_5(2)).to eq(2)
       expect(@euler.problem_5(10)).to eq(2520)
       expect(@euler.problem_5(20)).to eq(232792560)
+    end
+  end
+
+  describe 'problem_6' do
+    it 'should return the square sum difference of n' do
+      expect(@euler.problem_6(10)).to eq(2640)
+      expect(@euler.problem_6(100)).to eq(25164150)
     end
   end
 
