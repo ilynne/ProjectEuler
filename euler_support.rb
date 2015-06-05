@@ -27,4 +27,13 @@ module EulerSupport
   def reduce_digits(arr)
     arr.reduce(:+)
   end
+
+  def unique_multipliers(max)
+    arr = max > 2 ? (2.upto(max)).to_a : [max]
+    arr_keep = []
+    arr.each_with_index do |n, n_i|
+      arr_keep.push arr.select{|i| (i % arr[n_i] == 0)}.last
+    end
+    arr_keep.uniq.sort
+  end
 end

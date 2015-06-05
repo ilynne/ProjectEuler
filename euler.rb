@@ -51,6 +51,16 @@ class Euler
     palindromes.uniq.sort.last
   end
 
+  def problem_5(max) # much too slow
+    arr =  unique_multipliers(max)
+    product = max
+    until arr.map{|i| product % i}.reduce(:+) == 0
+      product += max
+      break if product > 10000000000
+    end 
+    product
+  end
+
   def problem_16(num, power)
     reduce_digits(int_to_array(num ** power))
   end
@@ -109,7 +119,9 @@ describe 'Project Euler Problems' do
 
   describe 'problem_5' do
     it 'should return the smallest multiple of all numbers 1 to n' do
+      expect(@euler.problem_5(2)).to eq(2)
       expect(@euler.problem_5(10)).to eq(2520)
+      expect(@euler.problem_5(20)).to eq(232792560)
     end
   end
 
